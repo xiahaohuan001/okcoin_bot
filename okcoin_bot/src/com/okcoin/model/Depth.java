@@ -1,10 +1,11 @@
 package com.okcoin.model;
 
 public class Depth {
-	double askprice;
-	double askvol;
-	double bidprice;
-	double bidvol;
+	Double askprice;	
+	Double askvol;
+	Double bidprice;
+	Double bidvol;
+	long time;
 	public Double getAskprice() {
 		return askprice;
 	}
@@ -28,6 +29,12 @@ public class Depth {
 	}
 	public void setBidvol(String bidvol) {
 		this.bidvol = Double.parseDouble(bidvol);
+	}
+	public long getTime() {
+		return time;
+	}
+	public void setTime(String time) {
+		this.time = Long.parseLong(time);
 	}
 	
 }

@@ -40,10 +40,10 @@ public class StockClient {
 	    stockGet.ticker("btc_usd");
 
             //现货市场深度
-            stockGet.depth("btc_usd");
+        stockGet.depth("btc_usd");
 		
             //现货OKCoin历史交易信息
-            stockGet.trades("btc_usd", "20");
+        stockGet.trades("btc_usd", "20");
 		
 	    //现货用户信息
 	    stockPost.userinfo();
@@ -55,7 +55,7 @@ public class StockClient {
 	    String tradeOrderV1 = tradeJSV1.getString("order_id");
 
 	    //现货获取用户订单信息
-            stockPost.order_info("btc_usd", tradeOrderV1);
+        stockPost.order_info("btc_usd", tradeOrderV1);
 		
 	    //现货撤销订单
 	    stockPost.cancel_order("btc_usd", tradeOrderV1);

@@ -2,28 +2,28 @@ package com.okcoin.model;
 
 public class BollClass {
 	long time;
-	double diff;
-	double avg;
-	double boll;
+	Double diff;
+	Double ma;
+	Double boll;
 	public long getTime() {
 		return time;
 	}
 	public void setTime(long time) {
 		this.time = time;
 	}
-	public double getDiff() {
+	public Double getDiff() {
 		return diff;
 	}
 	public void setDiff(double diff) {
 		this.diff = diff;
+	}	
+	public Double getMa() {
+		return ma;
 	}
-	public double getAvg() {
-		return avg;
+	public void setMa(double ma) {
+		this.ma = ma;
 	}
-	public void setAvg(double avg) {
-		this.avg = avg;
-	}
-	public double getBoll() {
+	public Double getBoll() {
 		return boll;
 	}
 	public void setBoll(double boll) {

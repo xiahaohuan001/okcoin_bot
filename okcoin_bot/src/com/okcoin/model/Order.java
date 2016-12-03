@@ -1,62 +1,62 @@
 package com.okcoin.model;
 
 public class Order {
-	double amount;
-	double avgprice;
+	Double amount;
+	Double avgprice;
 	long creatdate;
-	double dealamount;
-	long orderid;
-	long ordersid;
-	double price;
-	int status;
+	Double dealamount;
+	String orderid;
+	String ordersid;
+	Double price;
+	String status;
 	String symbol;
 	String type;
-	public double getAmount() {
+	public Double getAmount() {
 		return amount;
 	}
-	public void setAmount(double amount) {
-		this.amount = amount;
+	public void setAmount(String amount) {
+		this.amount = Double.parseDouble(amount);
 	}
-	public double getAvgprice() {
+	public Double getAvgprice() {
 		return avgprice;
 	}
-	public void setAvgprice(double avgprice) {
-		this.avgprice = avgprice;
+	public void setAvgprice(String avgprice) {
+		this.avgprice = Double.parseDouble(avgprice);
 	}
 	public long getCreatdate() {
 		return creatdate;
 	}
-	public void setCreatdate(long creatdate) {
-		this.creatdate = creatdate;
+	public void setCreatdate(String creatdate) {
+		this.creatdate = Long.parseLong(creatdate);
 	}
-	public double getDealamount() {
+	public Double getDealamount() {
 		return dealamount;
 	}
-	public void setDealamount(double dealamount) {
-		this.dealamount = dealamount;
+	public void setDealamount(String dealamount) {
+		this.dealamount = Double.parseDouble(dealamount);
 	}
-	public long getOrderid() {
+	public String getOrderid() {
 		return orderid;
 	}
-	public void setOrderid(long orderid) {
+	public void setOrderid(String orderid) {
 		this.orderid = orderid;
 	}
-	public long getOrdersid() {
+	public String getOrdersid() {
 		return ordersid;
 	}
-	public void setOrdersid(long ordersid) {
+	public void setOrdersid(String ordersid) {
 		this.ordersid = ordersid;
 	}
-	public double getPrice() {
+	public Double getPrice() {
 		return price;
 	}
-	public void setPrice(double price) {
-		this.price = price;
+	public void setPrice(String price) {
+		this.price = Double.parseDouble(price);
 	}
-	public int getStatus() {
+	public String getStatus() {
 		return status;
 	}
-	public void setStatus(int status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 	public String getSymbol() {

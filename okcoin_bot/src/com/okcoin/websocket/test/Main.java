@@ -42,17 +42,22 @@ public class Main {
 		//System.out.println(service.getClass());
 
 		// WebSocket客户端
-		WebSoketClient btctick = new WebSoketClient(url, service);
-		WebSoketClient ltctick = new WebSoketClient(url, service);
+		WebSoketClient client = new WebSoketClient(url, service);
+		//WebSoketClient uinfoclint = new WebSoketClient(url, service);
+		//WebSoketClient ltctick = new WebSoketClient(url, service);
 		//WebSoketClient btcdepth = new WebSoketClient(url, service);
 		//WebSoketClient ltcdepth = new WebSoketClient(url, service);
 		// 启动客户端
-		btctick.start();
-		ltctick.start();
+		client.start();
+		//uinfoclint.start();
+		//ltctick.start();
 
 		// 添加订阅
-		btctick.addChannel("ok_sub_spotcny_ltc_depth_20");
-		ltctick.addChannel("ok_sub_spotcny_btc_depth_60");
+		//client.addChannel("ok_sub_spotcny_ltc_ticker");
+		//client.addChannel("ok_sub_spotcny_btc_ticker");
+		client.addChannel("ok_sub_spotcny_ltc_depth_20");
+		client.addChannel("ok_sub_spotcny_btc_depth_60");
+		//uinfoclint.getUserInfo(apiKey,secretKey);
 		
 		//((WebSocketBase) strategy).start();
 		//IStockRestApi stockGet = new StockRestApi(url_rest);

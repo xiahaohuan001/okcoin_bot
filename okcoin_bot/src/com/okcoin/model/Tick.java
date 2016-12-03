@@ -1,47 +1,47 @@
 package com.okcoin.model;
 
 public class Tick {
-	double buy;
-	double high;
-	double last;
-	double low;
-	double sell;
-	double vol;
+	Double buy;
+	Double high;
+	Double last;
+	Double low;
+	Double sell;
+	Double vol;
 	long date;
-	public double getBuy() {
+	public Double getBuy() {
 		return buy;
 	}
-	public void setBuy(double buy) {
+	public void setBuy(Double buy) {
 		this.buy = buy;
 	}
-	public double getHigh() {
+	public Double getHigh() {
 		return high;
 	}
-	public void setHigh(double high) {
+	public void setHigh(Double high) {
 		this.high = high;
 	}
-	public double getLast() {
+	public Double getLast() {
 		return last;
 	}
-	public void setLast(double last) {
+	public void setLast(Double last) {
 		this.last = last;
 	}
-	public double getLow() {
+	public Double getLow() {
 		return low;
 	}
-	public void setLow(double low) {
+	public void setLow(Double low) {
 		this.low = low;
 	}
-	public double getSell() {
+	public Double getSell() {
 		return sell;
 	}
-	public void setSell(double sell) {
+	public void setSell(Double sell) {
 		this.sell = sell;
 	}
-	public double getVol() {
+	public Double getVol() {
 		return vol;
 	}
-	public void setVol(double vol) {
+	public void setVol(Double vol) {
 		this.vol = vol;
 	}
 	public long getDate() {

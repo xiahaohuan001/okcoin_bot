@@ -1,32 +1,47 @@
 package com.okcoin.model;
 
 public class Account {
-	double money;
-	double frozenmoney;
-	double stocks;
-	double frozenstocks;
-	public double getMoney() {
+	Double money;
+	Double frozenmoney;
+	Double btcamount;
+	Double frozenbtcamount;
+	Double ltcamount;
+	Double frozenltcamount;
+	public Double getMoney() {
 		return money;
 	}
-	public void setMoney(double money) {
-		this.money = money;
+	public void setMoney(String money) {
+		this.money = Double.parseDouble(money);
 	}
-	public double getFrozenmoney() {
+	public Double getFrozenmoney() {
 		return frozenmoney;
 	}
-	public void setFrozenmoney(double frozenmoney) {
-		this.frozenmoney = frozenmoney;
+	public void setFrozenmoney(String frozenmoney) {
+		this.frozenmoney = Double.parseDouble(frozenmoney);
 	}
-	public double getStocks() {
-		return stocks;
+	public Double getBtcamount() {
+		return btcamount;
 	}
-	public void setStocks(double stocks) {
-		this.stocks = stocks;
+	public void setBtcamount(String btcamount) {
+		this.btcamount = Double.parseDouble(btcamount);
 	}
-	public double getFrozenstocks() {
-		return frozenstocks;
+	public Double getFrozenbtcamount() {
+		return frozenbtcamount;
 	}
-	public void setFrozenstocks(double frozenstocks) {
-		this.frozenstocks = frozenstocks;
+	public void setFrozenbtcamount(String frozenbtcamount) {
+		this.frozenbtcamount = Double.parseDouble(frozenbtcamount);
 	}
+	public Double getLtcamount() {
+		return ltcamount;
+	}
+	public void setLtcamount(String ltcamount) {
+		this.ltcamount = Double.parseDouble(ltcamount);
+	}
+	public Double getFrozenltcamount() {
+		return frozenltcamount;
+	}
+	public void setFrozenltcamount(String frozenltcamount) {
+		this.frozenltcamount = Double.parseDouble(frozenltcamount);
+	}
+	
 }
