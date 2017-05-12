@@ -25,9 +25,9 @@ import java.net.Socket;
 
 public class stock_hedge_future {
 	private Logger log = Logger.getLogger(WebSocketBase.class);
-	List<Depth> btcDepth = new ArrayList<>();
-	List<Depth> ltcDepth = new ArrayList<>();
-	Account Account = new Account();
+	List<StockDepth> btcDepth = new ArrayList<>();
+	List<StockDepth> ltcDepth = new ArrayList<>();
+	StockAccount Account = new StockAccount();
 	List<StockOrder> Orders = new ArrayList<>();
 	int LTC_Multiple = 6;
 	int BTC_Multiple = 21;
@@ -58,7 +58,7 @@ public class stock_hedge_future {
 	int N = 120, BollRatio = 2;
 	int DiffCount = 0;
 	Untils untils = new Untils();
-	List<BollClass> BollList = new ArrayList<>();
+	//List<BollClass> BollList = new ArrayList<>();
 	SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
 	String api_key = "46674f7f-d06b-44f3-ac79-62945e4e6e6d"; 
 	String secret_key = "45EE20A0F9285983811E91A0A09E3989"; 														// 申请的secret_key
@@ -67,8 +67,8 @@ public class stock_hedge_future {
 	IStockRestApi stockPost = new StockRestApi(url_prex, api_key, secret_key);
 
 	public void stock_hedge_future(JSONArray btcdepth, JSONArray ltcdepth) throws HttpException, IOException {
-		btcDepth = untils.JsonToDepth(btcdepth);
-		ltcDepth = untils.JsonToDepth(ltcdepth);
+		btcDepth = untils.JsonToStockDepth(btcdepth);
+		ltcDepth = untils.JsonToStockDepth(ltcdepth);
 		BBuyPrice = CalculatePriceCanTrade("btc_cny", BTCAmount, "bid");
 		LSellPrice = CalculatePriceCanTrade("ltc_cny", LTCAmount, "ask");
 		BSellPrice = CalculatePriceCanTrade("btc_cny", BTCAmount, "ask");
@@ -248,7 +248,7 @@ public class stock_hedge_future {
 
 	public void BalanceAccount(long now) throws HttpException, IOException {
 		for (int i = 0; i < OrderType.length; i++) {
-			Orders = untils.StringToOrder(stockPost.order_info(OrderType[i], "-1"));
+			Orders = untils.StringToStockOrder(stockPost.order_info(OrderType[i], "-1"));
 			for (int j = 0; j < Orders.size(); j++) {
 				if(now - Orders.get(j).getCreatdate() > F_Time*1000){
 					log.info("订单："+Orders.get(j).getOrderid()+"超时");
@@ -284,7 +284,7 @@ public class stock_hedge_future {
 	}
 
 	public Double CalculatePriceCanTrade(String Symbol, Double Amount, String flag) {
-		List<Depth> depth = new ArrayList<>();
+		List<StockDepth> depth = new ArrayList<>();
 		if(Symbol.equals("btc_cny"))
 			depth = btcDepth;
 		else if(Symbol.equals("ltc_cny"))
@@ -331,50 +331,50 @@ public class stock_hedge_future {
 		return result;
 	}
 
-	public void CalculateBollClass(long time, Double diff, int N, int BollRatio) {
-		Double sumDiff = 0.0, sumDiff1 = 0.0;
-		int iSize = BollList.size();
-		BollClass tempBoll = new BollClass();
-		// System.out.println(tempBoll);
-		tempBoll.setTime(time);
-		// System.out.println("aaaaa");
-		tempBoll.setDiff(diff);
-		// tempBoll.setMa((Double) null);
-		// tempBoll.setBoll((Double) null);
-		int Flag = 0;
-		if (iSize == 0) {
-			// TempBoll.ma=null;
-			// Flag=0;
-			BollList.add(tempBoll);
-			// System.out.println(0000);
-			// boll = null;
-		} else if ((BollList.get(iSize - 1).getTime() - BollList.get(0).getTime() < N * 1000) && (Flag != 2)) {
-			// TempBoll.ma = null;
-			Flag = 1;
-			BollList.add(tempBoll);
-			// System.out.println(Boll.get(iSize - 1).getTime() -
-			// Boll.get(0).getTime());
-			// boll = null;
-		} else if (BollList.get(iSize - 1).getTime() - BollList.get(0).getTime() >= N * 1000) {
-			// System.out.print(Boll.size());
-			Flag = 2;
-			BollList.remove(0);
-			// System.out.print(Boll.size());
-			BollList.add(tempBoll);
-			// System.out.println(Boll.size());
-			// System.out.println(Boll.get(iSize - 1).getTime() -
-			// Boll.get(0).getTime());
-			for (int i = 0; i < BollList.size(); i++) {
-				sumDiff = sumDiff + BollList.get(i).getDiff();
-				sumDiff1 = sumDiff1 + BollList.get(i).getDiff() * BollList.get(i).getDiff();
-			}
-			// Boll[Boll.size() - 1].m_Sum = sumDiff;
-			BollList.get(BollList.size() - 1).setBoll(BollRatio * Math
-					.sqrt(sumDiff1 / BollList.size() - (sumDiff / BollList.size()) * (sumDiff / BollList.size())));
-			BollList.get(BollList.size() - 1).setMa(sumDiff / BollList.size());
-		}
-
-		// return Boll;
-	}
+//	public void CalculateBollClass(long time, Double diff, int N, int BollRatio) {
+//		Double sumDiff = 0.0, sumDiff1 = 0.0;
+//		int iSize = BollList.size();
+//		BollClass tempBoll = new BollClass();
+//		// System.out.println(tempBoll);
+//		tempBoll.setTime(time);
+//		// System.out.println("aaaaa");
+//		tempBoll.setDiff(diff);
+//		// tempBoll.setMa((Double) null);
+//		// tempBoll.setBoll((Double) null);
+//		int Flag = 0;
+//		if (iSize == 0) {
+//			// TempBoll.ma=null;
+//			// Flag=0;
+//			BollList.add(tempBoll);
+//			// System.out.println(0000);
+//			// boll = null;
+//		} else if ((BollList.get(iSize - 1).getTime() - BollList.get(0).getTime() < N * 1000) && (Flag != 2)) {
+//			// TempBoll.ma = null;
+//			Flag = 1;
+//			BollList.add(tempBoll);
+//			// System.out.println(Boll.get(iSize - 1).getTime() -
+//			// Boll.get(0).getTime());
+//			// boll = null;
+//		} else if (BollList.get(iSize - 1).getTime() - BollList.get(0).getTime() >= N * 1000) {
+//			// System.out.print(Boll.size());
+//			Flag = 2;
+//			BollList.remove(0);
+//			// System.out.print(Boll.size());
+//			BollList.add(tempBoll);
+//			// System.out.println(Boll.size());
+//			// System.out.println(Boll.get(iSize - 1).getTime() -
+//			// Boll.get(0).getTime());
+//			for (int i = 0; i < BollList.size(); i++) {
+//				sumDiff = sumDiff + BollList.get(i).getDiff();
+//				sumDiff1 = sumDiff1 + BollList.get(i).getDiff() * BollList.get(i).getDiff();
+//			}
+//			// Boll[Boll.size() - 1].m_Sum = sumDiff;
+//			BollList.get(BollList.size() - 1).setBoll(BollRatio * Math
+//					.sqrt(sumDiff1 / BollList.size() - (sumDiff / BollList.size()) * (sumDiff / BollList.size())));
+//			BollList.get(BollList.size() - 1).setMa(sumDiff / BollList.size());
+//		}
+//
+//		// return Boll;
+//	}
 
 }

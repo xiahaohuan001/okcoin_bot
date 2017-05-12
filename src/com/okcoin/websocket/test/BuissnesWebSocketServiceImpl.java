@@ -15,8 +15,7 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import sun.java2d.pipe.LoopBasedPipe;
 
-import com.okcoin.strategy.btc_hedge_ltc;
-import com.okcoin.strategy.future_hedge_future;
+import com.okcoin.strategy.*;
 //import com.alibaba.fastjson.JSONObject;
 import com.okcoin.ui.*;
 
@@ -33,14 +32,32 @@ public class BuissnesWebSocketServiceImpl extends Thread implements WebSocketSer
 	public static String stock_user_info = null;	
 	public static String future_depth = null;
 	public static String future_tick = null;
-	public static String future_user_info = null;	
-	
-	future_hedge_future future_hedge_future=new future_hedge_future();	
+	public static String future_user_info = null;
+	public static String depth = null;
+	future_hedge_future future_hedge_future = new future_hedge_future();	
+	stock_hedge_future_wg stock_hedge_future_wg = new stock_hedge_future_wg();
+	dq dq = new dq();
 	@Override
+	
 	public void onReceive(String msg) {
 		if (!msg.equals("{\"event\":\"pong\"}")) {
-			//msgObjList = JSONArray.fromObject(msg);
 			if (msg.indexOf("data")!=-1){
+				if(msg.indexOf("depth")!=-1){
+					depth = msg;
+					try {	
+//						if(msg.indexOf("ltc")!=-1)
+						//dq.OnTick(depth);
+//						if(msg.indexOf("btc")!=-1)
+						stock_hedge_future_wg.OnTick(depth);
+						
+					} catch (HttpException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
 				if(msg.indexOf("spot")!=-1){
 					if(msg.indexOf("ticker")!=-1)
 						stock_tick = msg;
@@ -53,16 +70,16 @@ public class BuissnesWebSocketServiceImpl extends Thread implements WebSocketSer
 					if(msg.indexOf("ticker")!=-1)
 						future_tick= msg;
 					if(msg.indexOf("depth")!=-1){
-						future_depth= msg;
-						try {
-							future_hedge_future.OnTick(future_depth);
-						} catch (HttpException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
+//						future_depth= msg;
+//						try {
+//							stock_hedge_future_wg.OnTick(future_depth);
+//						} catch (HttpException e) {
+//							// TODO Auto-generated catch block
+//							e.printStackTrace();
+//						} catch (IOException e) {
+//							// TODO Auto-generated catch block
+//							e.printStackTrace();
+//						}
 						//System.out.println("size" + future_depth.size());
 					}						
 					if(msg.indexOf("userinfo")!=-1)
@@ -77,6 +94,7 @@ public class BuissnesWebSocketServiceImpl extends Thread implements WebSocketSer
 		}
 		//else
 			//log.info("心跳检测"+msg);
+		//frmMain.LoadMsg(msg);
 		//log.info(msg);
 //		if(msg.indexOf("this_week")!=-1)
 //			log.info("当周："+msg);

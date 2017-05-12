@@ -10,6 +10,7 @@ import org.apache.http.HttpException;
 import com.okcoin.rest.stock.IStockRestApi;
 import com.okcoin.rest.stock.impl.StockRestApi;
 import com.okcoin.strategy.btc_hedge_ltc;
+import com.okcoin.strategy.stock_hedge_future_wg;
 import com.okcoin.ui.FrmMain;
 import com.okcoin.websocket.WebSocketBase;
 import com.okcoin.websocket.WebSocketService;
@@ -26,41 +27,38 @@ public class Main{
 
 		// apiKey 为用户申请的apiKey
 		//btc_hedge_ltc strategy =new btc_hedge_ltc();
-		String apiKey = "46674f7f-d06b-44f3-ac79-62945e4e6e6d";
+//		String apiKey_cn = "46674f7f-d06b-44f3-ac79-62945e4e6e6d";
+//		String secretKey_cn = "45EE20A0F9285983811E91A0A09E3989";		
+//		String apiKey_com = "5a395d18-6dc9-44b9-9b88-b13c7831feb9";
+//		String secretKey_com = "6702CA3A2AE744D6810249582D132A28";
 
-		// secretKey为用户申请的secretKey
-		String secretKey = "45EE20A0F9285983811E91A0A09E3989";
-		//new FrmMain();
-
-		
-		apiKey = "5a395d18-6dc9-44b9-9b88-b13c7831feb9";
-		secretKey = "6702CA3A2AE744D6810249582D132A28";
-
-		// 国际站WebSocket地址 注意如果访问国内站 请将 real.okcoin.com 改为 real.okcoin.cn
-		String url = "wss://real.okcoin.com:10440/websocket/okcoinapi";
-		String url_rest ="https://www.okcoin.com";
+		String url_com_ws = "wss://real.okcoin.com:10440/websocket/okcoinapi";
+		String url_com_rest = "https://www.okcoin.com/api/v1";
+		String url_cn_ws = "wss://real.okcoin.cn:10440/websocket/okcoinapi";
+		String url_cn_rest = "https://www.okcoin.cn/api/v1";
 
 		// 订阅消息处理类,用于处理WebSocket服务返回的消息
 		WebSocketService service = new BuissnesWebSocketServiceImpl();
 		//System.out.println(service.getClass());
 
 		// WebSocket客户端
-		WebSoketClient client = new WebSoketClient(url, service);
-		//WebSoketClient uinfoclint = new WebSoketClient(url, service);
-		//WebSoketClient ltctick = new WebSoketClient(url, service);
-		//WebSoketClient btcdepth = new WebSoketClient(url, service);
-		//WebSoketClient ltcdepth = new WebSoketClient(url, service);
+		WebSoketClient client_com = new WebSoketClient(url_com_ws, service);
+		//WebSoketClient client_cn = new WebSoketClient(url_cn_ws, service);
 		// 启动客户端
-		client.start();
-		//uinfoclint.start();
-		//ltctick.start();
+		client_com.start();
+		//client_cn.start();
 
 		// 添加订阅
 		//client.addChannel("ok_sub_spotcny_ltc_ticker");
-		client.addChannel("ok_sub_futureusd_btc_depth_this_week_60");
-		client.addChannel("ok_sub_futureusd_btc_depth_quarter_60");
-		BuissnesWebSocketServiceImpl e = new BuissnesWebSocketServiceImpl();
-		e.start();
+		//client_cn.addChannel("ok_sub_futureusd_btc_depth_this_week_60");
+//		client_com.addChannel("ok_sub_futureusd_ltc_depth_quarter_60");
+//		client_com.addChannel("ok_sub_futureusd_ltc_depth_this_week_60");
+//		client_com.addChannel("ok_sub_futureusd_ltc_depth_next_week_60");
+		client_com.addChannel("ok_sub_spotusd_btc_depth_60");
+		client_com.addChannel("ok_sub_futureusd_btc_depth_this_week_60");
+		//client_cn.addChannel("ok_sub_spotcny_btc_depth_60");
+//		BuissnesWebSocketServiceImpl e = new BuissnesWebSocketServiceImpl();
+//		e.start();
 		//client.addChannel("ok_sub_spotcny_ltc_depth_20");
 		//client.addChannel("ok_sub_spotcny_btc_depth_60");
 		//uinfoclint.getUserInfo(apiKey,secretKey);

@@ -35,7 +35,7 @@ public class future_hedge_future {
 	long lasttradetime;
 	long now = System.currentTimeMillis();
 	long clock1 = 0, clock2 = 0, clock3 = 0, clock4 = 0;
-	long F_Time = 2000;
+	long F_Time = 2;
 	String[] OrderType = { "btc_cny", "ltc_cny" };
 	String[] Contract_Type = { "this_week", "next_week", "quarter" };
 	Double Line;
@@ -46,9 +46,11 @@ public class future_hedge_future {
 	Double UP_Profit, Down_Profit;
 	Double Profit = 0.0;
 	Double SumProfit = 0.0;
-	Double MinProfit = 1.0;
+	Double MinProfit = 2.0;
 	Double MinAmount = 1.0;
-	Double MaxAmount = 10.0;
+	Double MaxAmount = 100.0;
+	Double zksum  = 0.0;
+	Double zdsum = 0.0;
 	Double Sum = 0.0;
 	Double FS_SB_Sum = 0.0, FB_SS_Sum = 0.0;
 	Double FBuyPrice, FSellPrice, SBuyPrice, SSellPrice;
@@ -92,31 +94,35 @@ public class future_hedge_future {
 					UpdateFutureAccount(futurePost.future_userinfo());
 					// if (FutureAccount.getBtcamount() > MinAmount &&
 					// StockAccount.getMoney() > LTCAmount * LBuyPrice) {
-					log.info("做空价差,当前Line:" + Line + "   价差：" + FS_SB_Diff + "   累计盈亏：" + Sum * MinAmount
+					log.info("做空价差,当前Line:" + Line + "   价差：" + FB_SS_Diff + "   交易次数：" + T_Times
 							+ stockPost.trade("btc_cny", "sell", FSellPrice.toString(), MinAmount.toString())
-							+ stockPost.trade("ltc_cny", "buy", SBuyPrice.toString(), MinAmount.toString()));
-					if (Balance != 0)
-						Sum = Sum + FS_SB_Diff - LastDiff;
-					LastDiff = FS_SB_Diff;
+							+ stockPost.trade("ltc_cny", "buy", SBuyPrice.toString(), MinAmount.toString()));					
+					LastDiff = FB_SS_Diff;
 					Balance++;
 					T_Times++;
 					lasttradetime = System.currentTimeMillis();
-					// }
+					if (Balance != 0)
+						zksum = zksum + FB_SS_Diff;
+					if (Balance == 0)
+						log.info("累计盈亏:" + (zdsum - zksum));
 				}
 
 				if ((FS_SB_Diff <= Line - 0.5 * Down_Profit) && Balance > -1 * MaxAmount) {
 					UpdateFutureAccount(futurePost.future_userinfo());
 					// if (StockAccount.getLtcamount() > MinAmount &&
 					// StockAccount.getMoney() > BTCAmount * BBuyPrice) {
-					log.info("做多价差,当前Line:" + Line + "   价差：" + FB_SS_Diff + "   累计盈亏：" + Sum * MinAmount
+					log.info("做多价差,当前Line:" + Line + "   价差：" + FS_SB_Diff + "   交易次数：" + T_Times
 							+ stockPost.trade("btc_cny", "buy", FBuyPrice.toString(), MinAmount.toString())
 							+ stockPost.trade("ltc_cny", "sell", SSellPrice.toString(), MinAmount.toString()));
-					if (Balance != 0)
-						Sum = Sum + LastDiff - FB_SS_Diff;
-					LastDiff = FB_SS_Diff;
+					
+					LastDiff = FS_SB_Diff;
 					Balance--;
 					T_Times++;
 					lasttradetime = System.currentTimeMillis();
+					if (Balance != 0)
+						zdsum = zdsum + FS_SB_Diff;
+					if (Balance == 0)
+						log.info("累计盈亏:" + (zdsum - zksum));
 					// }
 				}
 				if (now - clock4 >= 2000) {
